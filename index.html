@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Отчетность РФ 2026 — Навигатор</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:#f5f7fa;color:#1a1a2e;line-height:1.6}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+header{background:#fff;border-bottom:1px solid #e0e4eb;position:sticky;top:0;z-index:100;padding:14px 0}
+.header-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{font-weight:700;font-size:18px;display:flex;align-items:center;gap:8px}
+nav{display:flex;gap:18px;flex-wrap:wrap}
+nav a{color:#5a6478;text-decoration:none;font-size:14px;padding:6px 0;border-bottom:2px solid transparent}
+nav a:hover{color:#2563eb;border-bottom-color:#2563eb}
+main{padding:24px 0}
+section{background:#fff;border-radius:12px;padding:24px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+h1{font-size:22px;margin-bottom:16px}
+h2{font-size:18px;margin-bottom:14px;color:#1a1a2e}
+h3{font-size:16px;margin:14px 0 10px;color:#374151}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filter-btn{padding:8px 16px;border:1px solid #d1d8e0;background:#fff;border-radius:20px;cursor:pointer;font-size:13px;transition:.15s}
+.filter-btn.active{background:#2563eb;color:#fff;border-color:#2563eb}
+.filter-btn:hover:not(.active){border-color:#2563eb;color:#2563eb}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid #e8ecf1}
+th{background:#f8fafc;font-weight:600;font-size:13px;color:#5a6478}
+td{vertical-align:top}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.badge-fns{background:#dbeafe;color:#1e40af}
+.badge-sfr{background:#fce7f3;color:#9d174d}
+.badge-rosstat{background:#fef3c7;color:#92400e}
+.badge-buh{background:#d1fae5;color:#065f46}
+.badge-tax{background:#e0e7ff;color:#3730a3}
+.card{padding:14px;border:1px solid #e8ecf1;border-radius:8px;margin-bottom:10px}
+.card-title{font-weight:600;font-size:14px;margin-bottom:4px}
+.card-desc{font-size:13px;color:#5a6478}
+.card-meta{font-size:12px;color:#8b95a5;margin-top:6px}
+.calc-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.calc-box{padding:16px;background:#f8fafc;border-radius:8px}
+.calc-box label{display:block;font-size:13px;color:#5a6478;margin-bottom:4px}
+.calc-box input,.calc-box select{width:100%;padding:8px 10px;border:1px solid #d1d8e0;border-radius:6px;font-size:14px;margin-bottom:10px}
+.calc-box button{width:100%;padding:10px;background:#2563eb;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px;font-weight:500}
+.calc-box button:hover{background:#1d4ed8}
+.result{margin-top:12px;padding:12px;background:#f0fdf4;border-radius:6px;font-size:14px;display:none}
+.result.show{display:block}
+.result strong{color:#166534}
+.checklist label{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9;cursor:pointer;font-size:14px}
+.checklist input[type=checkbox]{margin-top:4px;width:16px;height:16px;cursor:pointer}
+.checklist .done{text-decoration:line-through;color:#8b95a5}
+.cal-table td:first-child{font-weight:600;white-space:nowrap}
+.cal-table td:nth-child(2){color:#5a6478;font-size:13px}
+.export-btn{padding:10px 18px;background:#2563eb;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500}
+.export-btn:hover{background:#1d4ed8}
+footer{padding:24px 0;text-align:center;color:#8b95a5;font-size:13px}
+.note{background:#fef9c3;padding:12px 16px;border-radius:8px;font-size:13px;color:#854d0e;margin-bottom:16px;border-left:3px solid #eab308}
+@media(max-width:640px){nav{display:none}.calc-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<div class="container header-inner">
+<div class="logo">📋 Отчетность РФ 2026</div>
+<nav>
+<a href="#forms">Формы</a>
+<a href="#calc">Калькулятор</a>
+<a href="#calendar">Сроки</a>
+<a href="#checklist">Чек-лист</a>
+</nav>
+</div>
+</header>
+<main class="container">
+
+<section id="forms">
+<h1>Справочник отчетности</h1>
+<div class="note">⚠️ Данные носят справочный характер. Перед сдачей проверяйте актуальность на официальных сайтах ФНС, СФР и Росстата.</div>
+<div class="filters">
+<button class="filter-btn active" data-filter="all">Все</button>
+<button class="filter-btn" data-filter="osno">ОСНО</button>
+<button class="filter-btn" data-filter="usn">УСН</button>
+<button class="filter-btn" data-filter="patent">Патент</button>
+<button class="filter-btn" data-filter="ausn">АУСН</button>
+<button class="filter-btn" data-filter="npd">НПД</button>
+<button class="filter-btn" data-filter="ip">ИП</button>
+<button class="filter-btn" data-filter="ooo">ООО</button>
+</div>
+<div id="formsList"></div>
+</section>
+
+<section id="calc">
+<h1>Калькуляторы</h1>
+<div class="calc-grid">
+
+<div class="calc-box">
+<h3>УСН «Доходы» 6%</h3>
+<label>Доход за период, ₽</label>
+<input type="number" id="usn6Income" value="1000000">
+<label>Страховые взносы ИП за себя, ₽</label>
+<input type="number" id="usn6Contrib" value="57390">
+<button onclick="calcUsn6()">Рассчитать</button>
+<div class="result" id="usn6Result"></div>
+</div>
+
+<div class="calc-box">
+<h3>УСН «Доходы минус расходы» 15%</h3>
+<label>Доход, ₽</label>
+<input type="number" id="usn15Income" value="1000000">
+<label>Расход, ₽</label>
+<input type="number" id="usn15Expense" value="700000">
+<label>Страховые взносы ИП за себя, ₽</label>
+<input type="number" id="usn15Contrib" value="57390">
+<button onclick="calcUsn15()">Рассчитать</button>
+<div class="result" id="usn15Result"></div>
+</div>
+
+<div class="calc-box">
+<h3>Страховые взносы ИП за себя</h3>
+<label>Доход ИП за год, ₽</label>
+<input type="number" id="ipIncome" value="1000000">
+<label>Год</label>
+<select id="ipYear"><option value="2026">2026</option><option value="2025">2025</option></select>
+<button onclick="calcIpContrib()">Рассчитать</button>
+<div class="result" id="ipContribResult"></div>
+</div>
+
+<div class="calc-box">
+<h3>НДФЛ с зарплаты</h3>
+<label>Зарплата в месяц, ₽</label>
+<input type="number" id="salary" value="50000">
+<label>Ставка</label>
+<select id="ndflRate"><option value="13">13%</option><option value="15">15%</option><option value="30">30%</option></select>
+<button onclick="calcNdfl()">Рассчитать</button>
+<div class="result" id="ndflResult"></div>
+</div>
+
+<div class="calc-box">
+<h3>НДС</h3>
+<label>Сумма, ₽</label>
+<input type="number" id="ndsAmount" value="100000">
+<label>Ставка</label>
+<select id="ndsRate"><option value="22">22%</option><option value="20">20%</option><option value="10">10%</option><option value="7">7%</option><option value="5">5%</option></select>
+<button onclick="calcNds()">Рассчитать</button>
+<div class="result" id="ndsResult"></div>
+</div>
+
+<div class="calc-box">
+<h3>Налог на прибыль (ОСНО)</h3>
+<label>Доход, ₽</label>
+<input type="number" id="profitIncome" value="5000000">
+<label>Расход, ₽</label>
+<input type="number" id="profitExpense" value="4000000">
+<button onclick="calcProfit()">Рассчитать</button>
+<div class="result" id="profitResult"></div>
+</div>
+
+</div>
+</section>
+
+<section id="calendar">
+<h1>Сроки сдачи 2026</h1>
+<table class="cal-table">
+<thead><tr><th>Дата</th><th>Что сдают</th></tr></thead>
+<tbody id="calendarBody"></tbody>
+</table>
+<button class="export-btn" onclick="exportCalendar()" style="margin-top:16px">📥 Экспорт календаря в CSV</button>
+</section>
+
+<section id="checklist">
+<h1>Чек-лист</h1>
+<p style="font-size:13px;color:#5a6478;margin-bottom:12px">Отмечайте сданное — прогресс сохраняется автоматически</p>
+<div class="checklist" id="checklistBody"></div>
+<button class="export-btn" onclick="resetChecklist()" style="margin-top:16px;background:#dc2626">Сбросить</button>
+</section>
+
+</main>
+<footer><div class="container"><p>Справочный сервис. Не является юридическим заключением.</p></div></footer>
+
+<script>
+var FORMS = [
+{name:'Бухгалтерская отчетность (Баланс, ОФР, Пояснения)',who:'ООО',tax:'all',auth:'buh',period:'Годовая',deadline:'31.03.2026',law:'ФСБУ 4/2023, 402-ФЗ'},
+{name:'Декларация по УСН',who:'ООО, ИП',tax:'usn',auth:'fns',period:'Годовая',deadline:'ООО — 25.03.2026, ИП — 27.04.2026',law:'Приказ ФНС от 26.11.2025 № ЕД-7-3/1017@'},
+{name:'Декларация по НДС',who:'ООО, ИП',tax:'osno',auth:'fns',period:'Квартальная',deadline:'25-е число месяца после квартала (за I кв. — 27.04.2026)',law:'НК РФ'},
+{name:'Декларация по налогу на прибыль',who:'ООО',tax:'osno',auth:'fns',period:'Квартальная',deadline:'25-е число месяца после квартала; год — 25.03.2026',law:'Приказ ФНС от 03.10.2025 № ЕД-7-3/855@'},
+{name:'Расчет по страховым взносам (РСВ)',who:'ООО, ИП с работниками',tax:'all',auth:'fns',period:'Квартальная',deadline:'25-е число месяца после квартала',law:'Приказ ФНС от 04.02.2026 № ЕД-1-11/67@'},
+{name:'6-НДФЛ',who:'ООО, ИП с работниками',tax:'all',auth:'fns',period:'Квартальная',deadline:'25-е число месяца после квартала',law:'Приказ ФНС'},
+{name:'Персонифицированные сведения',who:'ООО, ИП с работниками',tax:'all',auth:'fns',period:'Ежемесячно',deadline:'25-е число каждого месяца',law:'НК РФ ст. 431'},
+{name:'ЕФС-1 (раздел 2 — травматизм)',who:'ООО, ИП с работниками',tax:'all',auth:'sfr',period:'Квартальная',deadline:'25-е число месяца после квартала',law:'Приказ СФР'},
+{name:'ЕФС-1 (подраздел 1.1 — кадровые события)',who:'ООО, ИП с работниками',tax:'all',auth:'sfr',period:'При событиях',deadline:'День, следующий за событием',law:'Приказ СФР'},
+{name:'Форма ПМ (малые предприятия)',who:'ООО',tax:'all',auth:'rosstat',period:'Квартальная',deadline:'с 1 по 29 число после квартала',law:'Приказ Росстата №462'},
+{name:'Форма МП(микро)',who:'ООО',tax:'all',auth:'rosstat',period:'Годовая',deadline:'с 1 раб. дня января по 5 февраля',law:'Приказ Росстата'},
+{name:'Уведомление об исчисленных налогах',who:'ООО, ИП',tax:'all',auth:'fns',period:'Ежемесячно',deadline:'25-е число',law:'НК РФ ст.58'}
+];
+
+var CALENDAR = [
+{date:'25.01.2026',what:'Персонифицированные сведения за декабрь 2025'},
+{date:'25.02.2026',what:'6-НДФЛ за 2025 год; Персонифицированные сведения за январь'},
+{date:'25.03.2026',what:'Декларация по УСН за 2025 год (ООО); Персонифицированные сведения за февраль; Декларация по налогу на прибыль за 2025 год'},
+{date:'31.03.2026',what:'Бухгалтерская отчетность за 2025 год'},
+{date:'27.04.2026',what:'Декларация по УСН за 2025 год (ИП); РСВ за I квартал; 6-НДФЛ за I квартал; ЕФС-1 за I квартал; Декларация по НДС за I квартал; Декларация по налогу на прибыль за I квартал'},
+{date:'25.05.2026',what:'Персонифицированные сведения за апрель'},
+{date:'25.06.2026',what:'Персонифицированные сведения за май'},
+{date:'27.07.2026',what:'РСВ за полугодие; 6-НДФЛ за полугодие; ЕФС-1 за полугодие; Декларация по НДС за II квартал; Персонифицированные сведения за июнь'},
+{date:'25.08.2026',what:'Персонифицированные сведения за июль'},
+{date:'25.09.2026',what:'Персонифицированные сведения за август'},
+{date:'26.10.2026',what:'РСВ за 9 месяцев; 6-НДФЛ за 9 месяцев; ЕФС-1 за 9 месяцев; Декларация по НДС за III квартал; Персонифицированные сведения за сентябрь'},
+{date:'25.11.2026',what:'Персонифицированные сведения за октябрь'},
+{date:'25.12.2026',what:'Персонифицированные сведения за ноябрь'},
+{date:'25.01.2027',what:'РСВ за 2026 год; Персонифицированные сведения за декабрь 2026; ЕФС-1 за 2026 год'},
+{date:'25.02.2027',what:'6-НДФЛ за 2026 год'}
+];
+
+var CHECKLIST = [
+'Бухгалтерский баланс',
+'Отчет о финансовых результатах',
+'Пояснения к бухотчетности',
+'Декларация по УСН',
+'Декларация по НДС',
+'Декларация по налогу на прибыль',
+'Расчет по страховым взносам (РСВ)',
+'6-НДФЛ',
+'Персонифицированные сведения',
+'ЕФС-1',
+'Форма ПМ',
+'Форма МП(микро)',
+'Уведомление об исчисленных налогах'
+];
+
+function fmt(n){return new Intl.NumberFormat('ru-RU',{style:'currency',currency:'RUB',maximumFractionDigits:0}).format(n||0)}
+
+function renderForms(filter){
+var html='<table><thead><tr><th>Форма</th><th>Кто сдает</th><th>Ведомство</th><th>Период</th><th>Срок</th></tr></thead><tbody>';
+FORMS.forEach(function(f){
+var show=true;
+if(filter!=='all'){
+if(['osno','usn','patent','ausn','npd'].indexOf(filter)>=0){show=(f.tax==='all'||f.tax===filter)}
+else if(filter==='ip'){show=(f.who.indexOf('ИП')>=0)}
+else if(filter==='ooo'){show=(f.who.indexOf('ООО')>=0)}
+}
+if(show){
+var badge='<span class="badge badge-'+f.auth+'">'+f.auth.toUpperCase()+'</span>';
+html+='<tr><td><div class="card-title">'+f.name+'</div><div class="card-meta">'+f.law+'</div></td><td>'+f.who+'</td><td>'+badge+'</td><td>'+f.period+'</td><td>'+f.deadline+'</td></tr>';
+}
+});
+html+='</tbody></table>';
+document.getElementById('formsList').innerHTML=html;
+}
+
+function renderCalendar(){
+var html='';
+CALENDAR.forEach(function(c){html+='<tr><td>'+c.date+'</td><td>'+c.what+'</td></tr>'});
+document.getElementById('calendarBody').innerHTML=html;
+}
+
+function renderChecklist(){
+var saved=JSON.parse(localStorage.getItem('checklist')||'{}');
+var html='';
+CHECKLIST.forEach(function(item,i){
+var checked=saved[i]?'checked':'';
+var cls=saved[i]?'done':'';
+html+='<label><input type="checkbox" '+checked+' onchange="toggleCheck('+i+',this.checked)"><span class="'+cls+'">'+item+'</span></label>';
+});
+document.getElementById('checklistBody').innerHTML=html;
+}
+
+function toggleCheck(i,val){
+var saved=JSON.parse(localStorage.getItem('checklist')||'{}');
+saved[i]=val;
+localStorage.setItem('checklist',JSON.stringify(saved));
+renderChecklist();
+}
+
+function resetChecklist(){
+if(confirm('Сбросить все отметки?')){localStorage.removeItem('checklist');renderChecklist()}
+}
+
+document.querySelectorAll('.filter-btn').forEach(function(btn){
+btn.addEventListener('click',function(){
+document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+btn.classList.add('active');
+renderForms(btn.dataset.filter);
+});
+});
+
+function calcUsn6(){
+var inc=+document.getElementById('usn6Income').value||0;
+var con=+document.getElementById('usn6Contrib').value||0;
+var tax=inc*0.06;
+var minTax=inc*0.01;
+var payable=Math.max(tax-con,minTax);
+var r=document.getElementById('usn6Result');
+r.className='result show';
+r.innerHTML='<p>Налог 6%: <strong>'+fmt(tax)+'</strong></p><p>Минимальный налог: <strong>'+fmt(minTax)+'</strong></p><p>К уплате с вычетом взносов: <strong>'+fmt(payable)+'</strong></p>';
+}
+
+function calcUsn15(){
+var inc=+document.getElementById('usn15Income').value||0;
+var exp=+document.getElementById('usn15Expense').value||0;
+var con=+document.getElementById('usn15Contrib').value||0;
+var profit=inc-exp;
+var tax=profit*0.15;
+var minTax=inc*0.01;
+var payable=Math.max(tax-con,minTax);
+var r=document.getElementById('usn15Result');
+r.className='result show';
+r.innerHTML='<p>Прибыль: <strong>'+fmt(profit)+'</strong></p><p>Налог 15%: <strong>'+fmt(tax)+'</strong></p><p>Минимальный налог: <strong>'+fmt(minTax)+'</strong></p><p>К уплате: <strong>'+fmt(payable)+'</strong></p>';
+}
+
+function calcIpContrib(){
+var inc=+document.getElementById('ipIncome').value||0;
+var year=document.getElementById('ipYear').value;
+var fixed=year==='2026'?57390:53218;
+var extra=Math.max(0,(inc-300000)*0.01);
+var maxExtra=year==='2026'?321818:300888;
+extra=Math.min(extra,maxExtra);
+var total=fixed+extra;
+var r=document.getElementById('ipContribResult');
+r.className='result show';
+r.innerHTML='<p>Фиксированные взносы: <strong>'+fmt(fixed)+'</strong></p><p>1% с превышения: <strong>'+fmt(extra)+'</strong></p><p>Итого: <strong>'+fmt(total)+'</strong></p>';
+}
+
+function calcNdfl(){
+var s=+document.getElementById('salary').value||0;
+var rate=+document.getElementById('ndflRate').value||13;
+var ndfl=s*rate/100;
+var net=s-ndfl;
+var year=net*12;
+var r=document.getElementById('ndflResult');
+r.className='result show';
+r.innerHTML='<p>НДФЛ в месяц: <strong>'+fmt(ndfl)+'</strong></p><p>На руки: <strong>'+fmt(net)+'</strong></p><p>За год (на руки): <strong>'+fmt(year)+'</strong></p>';
+}
+
+function calcNds(){
+var a=+document.getElementById('ndsAmount').value||0;
+var rate=+document.getElementById('ndsRate').value||20;
+var nds=a*rate/(100+rate);
+var without=a-nds;
+var r=document.getElementById('ndsResult');
+r.className='result show';
+r.innerHTML='<p>Сумма без НДС: <strong>'+fmt(without)+'</strong></p><p>НДС '+rate+'%: <strong>'+fmt(nds)+'</strong></p><p>Итого с НДС: <strong>'+fmt(a)+'</strong></p>';
+}
+
+function calcProfit(){
+var inc=+document.getElementById('profitIncome').value||0;
+var exp=+document.getElementById('profitExpense').value||0;
+var profit=inc-exp;
+var tax=Math.max(0,profit*0.20);
+var r=document.getElementById('profitResult');
+r.className='result show';
+r.innerHTML='<p>Прибыль: <strong>'+fmt(profit)+'</strong></p><p>Налог 20%: <strong>'+fmt(tax)+'</strong></p>';
+}
+
+function exportCalendar(){
+var csv='Дата;Событие\n';
+CALENDAR.forEach(function(c){csv+=c.date+';'+c.what+'\n'});
+var blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
+var url=URL.createObjectURL(blob);
+var a=document.createElement('a');a.href=url;a.download='calendar-2026.csv';a.click();
+URL.revokeObjectURL(url);
+}
+
+renderForms('all');
+renderCalendar();
+renderChecklist();
+</script>
+</body>
+</html>
